@@ -46,8 +46,8 @@ combined_features = np.hstack([
 # Compute cosine similarity
 similarity_matrix = cosine_similarity(combined_features, combined_features)
 
-# Recommendation function
-def recommend(movie_title, n_recommendation):
+# Recommendation Function
+def recommend(movie_title, n_recommendation=5):
     try:
         idx = new_data[new_data["Series_Title"] == movie_title].index[0]
     except IndexError:
@@ -55,7 +55,7 @@ def recommend(movie_title, n_recommendation):
     
     similarity_score = list(enumerate(similarity_matrix[idx]))
     similarity_score = sorted(similarity_score, key=lambda x: x[1], reverse=True)
-    top_movies = [(new_data["Series_Title"][i[0]], i[1]) for i in similarity_score[1:n_recommendation + 1]]
+    top_movies = [(new_data["Series_Title"][i[0]], new_data["Overview"][i[0]], i[1]) for i in similarity_score[1:n_recommendation + 1]]
     
     return top_movies
 

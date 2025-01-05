@@ -62,8 +62,9 @@ def recommend(movie_title, n_recommendation):
 # Streamlit UI
 st.title("Movie Recommendation System")
 
-# Dropdown for selecting a movie
-selected_movie = st.selectbox("Select a Movie", new_data["Series_Title"])
+# Dropdown for selecting a movie (sorted alphabetically)
+sorted_movies = sorted(new_data["Series_Title"])
+selected_movie = st.selectbox("Select a Movie", sorted_movies)
 
 # Slider for number of recommendations
 num_recommendations = st.slider("Number of Recommendations", 1, 5, 3)
@@ -77,7 +78,7 @@ if st.button("Get Recommendations"):
     # Get top recommendations
     recommendations = recommend(selected_movie, num_recommendations)
     
-    for movie, score in recommendations:
+    for movie, overview, score in recommendations:
         movie_img = new_data[new_data["Series_Title"] == movie]["Poster_Link"].values[0]
         st.image(movie_img, caption=f"{movie} (Score: {score:.2f})", width=200)
-
+        st.write(f"**Overview**: {overview}")

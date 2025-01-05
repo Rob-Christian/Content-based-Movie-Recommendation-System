@@ -71,13 +71,6 @@ num_recommendations = st.slider("Number of Recommendations", 1, 5, 3)
 
 # Button to show recommendations
 if st.button("Get Recommendations"):
-    # Display the selected movie's image (centered)
-    selected_movie_img = new_data[new_data["Series_Title"] == selected_movie]["Poster_Link"].values[0]
-    st.markdown(
-        f'<div style="display: flex; justify-content: center;"><img src="{selected_movie_img}" alt="{selected_movie}" width="200"></div>',
-        unsafe_allow_html=True
-    )
-
     # Get top recommendations
     recommendations = recommend(selected_movie, num_recommendations)
     
@@ -90,11 +83,15 @@ if st.button("Get Recommendations"):
         # Alternate placement of the images in the two columns
         if idx % 2 == 0:
             with col1:
+                # Center the movie title and image
+                st.markdown(f"<h3 style='text-align: center;'>{movie}</h3>", unsafe_allow_html=True)
                 st.markdown(f'<div style="display: flex; justify-content: center;"><img src="{movie_img}" alt="{movie}" width="200"></div>', unsafe_allow_html=True)
-                st.write(f"**{movie}** (Score: {score:.2f})")
                 st.write(f"**Overview**: {overview}")
+                st.write(f"**Score**: {score:.2f}")
         else:
             with col2:
+                # Center the movie title and image
+                st.markdown(f"<h3 style='text-align: center;'>{movie}</h3>", unsafe_allow_html=True)
                 st.markdown(f'<div style="display: flex; justify-content: center;"><img src="{movie_img}" alt="{movie}" width="200"></div>', unsafe_allow_html=True)
-                st.write(f"**{movie}** (Score: {score:.2f})")
                 st.write(f"**Overview**: {overview}")
+                st.write(f"**Score**: {score:.2f}")
